@@ -1,0 +1,20 @@
+---
+title: "PML Project Writeup"
+output: html_document
+---
+
+The goal of this exercise is to build a model to predict how an exercise was performed using the [Weight Lifting Exercises Dataset](http://groupware.les.inf.puc-rio.br/har).
+
+There is a lot of incomplete data in the dataset, as well as a lot of summary data. Only the raw sensor data that was mostly complete was used as predictors. I chose a random forest method to build the model because it has built in cross-validation, it would automatically find the most important predictors, and the data is nonlinear.
+
+```{r, eval=FALSE}
+model <- randomForest(classe ~ roll_belt + pitch_belt + yaw_belt + gyros_belt_x + gyros_belt_y + gyros_belt_z + accel_belt_x + accel_belt_y + accel_belt_z + magnet_belt_x + magnet_belt_y + magnet_belt_z + roll_arm + pitch_arm + yaw_arm + gyros_arm_x + gyros_arm_y + gyros_arm_z + accel_arm_x + accel_arm_y + accel_arm_z + magnet_arm_x + magnet_arm_y + magnet_arm_z + roll_dumbbell + pitch_dumbbell + yaw_dumbbell + gyros_dumbbell_x + gyros_dumbbell_y + gyros_dumbbell_z + accel_dumbbell_x + accel_dumbbell_y + accel_dumbbell_z + magnet_dumbbell_x + magnet_dumbbell_y + magnet_dumbbell_z + roll_forearm + pitch_forearm + yaw_forearm + gyros_forearm_x + gyros_forearm_y + gyros_forearm_z + accel_forearm_x + accel_forearm_y + accel_forearm_z + magnet_forearm_x + magnet_forearm_y + magnet_forearm_z, data = pml.training)
+```
+
+The resulting confusion matrix is:
+```{r, echo=FALSE}
+load(file="model.RData")
+model$confusion
+```
+
+The OOB error is estimated to be less than 1%.
